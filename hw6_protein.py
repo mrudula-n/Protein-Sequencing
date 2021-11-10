@@ -17,8 +17,14 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
-
+    file=open(filename,"r")
+    lines=file.read()
+    file.close()
+    nlines=lines.splitlines()
+    empty_string=""
+    for line in nlines:
+        empty_string+=line
+    return empty_string
 
 '''
 dnaToRna(dna, startIndex)
@@ -27,9 +33,14 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
-
-
+    x=dna.replace("T", "U")
+    empty_lst=[]
+    for i in range(startIndex, len(x), 3):
+        empty_lst.append(x[i:i+3])
+        if x[i:i+3]=="UAG" or x[i:i+3]=="UAA" or x[i:i+3]=="UGA":
+            break
+    return empty_lst
+    
 '''
 makeCodonDictionary(filename)
 #3 [Check6-1]
@@ -187,9 +198,10 @@ def runFullProgram():
 # This code runs the test cases to check your work
 if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
+    # test.week1Tests()
+    test.testDnaToRna()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    runWeek1()
+    # runWeek1()
 
     ## Uncomment these for Week 2 ##
     """
