@@ -40,7 +40,7 @@ def dnaToRna(dna, startIndex):
         if x[i:i+3]=="UAG" or x[i:i+3]=="UAA" or x[i:i+3]=="UGA":
             break
     return empty_lst
-    
+
 '''
 makeCodonDictionary(filename)
 #3 [Check6-1]
@@ -49,7 +49,13 @@ Returns: dict mapping strs to strs
 '''
 def makeCodonDictionary(filename):
     import json
-    return
+    dictionary={}
+    file=open(filename)
+    new_file=json.load(file)
+    for i,j in new_file.items():
+        for k in j:
+            dictionary[k.replace("T", "U")]=i
+    return dictionary
 
 
 '''
@@ -198,8 +204,8 @@ def runFullProgram():
 # This code runs the test cases to check your work
 if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    # test.week1Tests()
-    test.testDnaToRna()
+    test.week1Tests()
+    test.makeCodonDictionary()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     # runWeek1()
 
