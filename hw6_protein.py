@@ -17,8 +17,14 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
-
+    file=open(filename,"r")
+    lines=file.read()
+    file.close()
+    nlines=lines.splitlines()
+    empty_string=""
+    for line in nlines:
+        empty_string+=line
+    return empty_string
 
 '''
 dnaToRna(dna, startIndex)
@@ -27,8 +33,13 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
-
+    x=dna.replace("T", "U")
+    empty_lst=[]
+    for i in range(startIndex, len(x), 3):
+        empty_lst.append(x[i:i+3])
+        if x[i:i+3]=="UAG" or x[i:i+3]=="UAA" or x[i:i+3]=="UGA":
+            break
+    return empty_lst
 
 '''
 makeCodonDictionary(filename)
@@ -38,7 +49,13 @@ Returns: dict mapping strs to strs
 '''
 def makeCodonDictionary(filename):
     import json
-    return
+    dictionary={}
+    file=open(filename)
+    new_file=json.load(file)
+    for i,j in new_file.items():
+        for k in j:
+            dictionary[k.replace("T", "U")]=i
+    return dictionary
 
 
 '''
@@ -48,7 +65,13 @@ Parameters: list of strs ; dict mapping strs to strs
 Returns: list of strs
 '''
 def generateProtein(codons, codonD):
-    return
+    protein_list=[]
+    if codons[0]=="AUG":
+        protein_list.append("Start")
+    for i in range(1, len(codons)):
+        if codons[i] in codonD.keys():
+            protein_list.append(codonD[codons[i]])
+    return protein_list
 
 
 '''
@@ -58,7 +81,21 @@ Parameters: str ; str
 Returns: 2D list of strs
 '''
 def synthesizeProteins(dnaFilename, codonFilename):
-    return
+    file1=readFile(dnaFilename)
+    file2=makeCodonDictionary(codonFilename)
+    count=0
+    new_list=[]
+    i=0
+    while i<len(file1):
+        if file1[i:i+3]=="ATG":
+            file3=dnaToRna(file1, i)
+            proteins=generateProtein(file3, file2)
+            new_list.append(proteins)
+            i=i+3*len(file3)
+        else:
+            i=i+1
+            count+=1
+    return new_list
 
 
 def runWeek1():
@@ -188,6 +225,7 @@ def runFullProgram():
 if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
     test.week1Tests()
+    # test.testSynthesizeProteins()
     print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     runWeek1()
 
