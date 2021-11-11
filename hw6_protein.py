@@ -160,7 +160,33 @@ Parameters: 2D list of strs ; 2D list of strs ; float
 Returns: 2D list of values
 '''
 def findAminoAcidDifferences(proteinList1, proteinList2, cutoff):
-    return
+    combine_list1=combineProteins(proteinList1)
+    combine_list2=combineProteins(proteinList2)
+    amino_dict1=aminoAcidDictionary(combine_list1)
+    amino_dict2=aminoAcidDictionary(combine_list2)
+    frequency_dict1={}
+    frequency_dict2={}
+    temporary_list=[]
+    frequency_difference=[]
+    for i in amino_dict1:
+        frequency_dict1[i]=amino_dict1[i]/len(combine_list1)
+        if i not in temporary_list and i!="Start" and i!="Stop":
+            temporary_list.append(i)
+    for j in amino_dict2:
+        frequency_dict2[j]=amino_dict2[j]/len(combine_list2)
+        if j not in temporary_list and j!="Start" and j!="Stop":
+            temporary_list.append(j)
+    for k in temporary_list:
+        frequency1=0
+        frequency2=0
+        if k in frequency_dict1:
+            frequency1=frequency_dict1[k]
+        if k in frequency_dict2:
+            frequency2=frequency_dict2[k]
+        difference=frequency2-frequency1
+        if difference < -cutoff or difference > cutoff:
+            frequency_difference.append([k, frequency1, frequency2])
+    return frequency_difference
 
 
 '''
@@ -169,7 +195,7 @@ displayTextResults(commonalities, differences)
 Parameters: 2D list of strs ; 2D list of values
 Returns: None
 '''
-def displayTextResults(commonalities, differences):
+def displayTextResults(commonalities, differences):       
     return
 
 
@@ -248,7 +274,7 @@ if __name__ == "__main__":
     ## Uncomment these for Week 2 ##
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     # test.week2Tests()
-    test.testAminoAcidDictionary()
+    test.testFindAminoAcidDifferences()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     # runWeek2()
 
