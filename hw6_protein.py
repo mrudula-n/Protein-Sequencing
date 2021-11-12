@@ -4,6 +4,7 @@ Name:
 Roll Number:
 """
 
+from matplotlib.pyplot import legend
 import hw6_protein_tests as test
 
 project = "Protein" # don't edit this
@@ -276,7 +277,16 @@ Returns: None
 '''
 def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None):
     import matplotlib.pyplot as plt
-    import numpy
+    import numpy as np
+    w=0.4
+    values_of_x=np.arange(len(xLabels))
+    values_of_y=np.arange(-w, len(xLabels)-1, 1)
+    plt.bar(values_of_y, freqList1, width=w, label=label1)
+    plt.bar(values_of_x, freqList2, width=w, label=label2)
+    plt.xticks(ticks=values_of_x, labels=xLabels, rotation="horizontal")
+    plt.legend()
+    plt.title("Frequencies comparision")
+    plt.show()
     return
 
 
@@ -322,7 +332,7 @@ if __name__ == "__main__":
 
     print("\n" + "#"*15 + " WEEK 3 TESTS " +  "#" * 16 + "\n")
     # test.week3Tests()
-    test.testSetupChartData()
+    test.testCreateChart()
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     # runFullProgram()
 
