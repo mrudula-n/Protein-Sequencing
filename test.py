@@ -1,4 +1,4 @@
-# data="data\human_p53.txt"
+data="data\human_p53.txt"
 # f=open(data)
 # file=f.read()
 # f.close()
