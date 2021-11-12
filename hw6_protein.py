@@ -5,6 +5,7 @@ Roll Number:
 """
 
 from matplotlib.pyplot import legend
+from numpy import RankWarning
 import hw6_protein_tests as test
 
 project = "Protein" # don't edit this
@@ -281,8 +282,8 @@ def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None):
     w=0.4
     values_of_x=np.arange(len(xLabels))
     values_of_y=np.arange(-w, len(xLabels)-1, 1)
-    plt.bar(values_of_y, freqList1, width=w, label=label1)
-    plt.bar(values_of_x, freqList2, width=w, label=label2)
+    plt.bar(values_of_y, freqList1, width=w, label=label1, edgecolor=edgeList)
+    plt.bar(values_of_x, freqList2, width=w, label=label2, edgecolor=edgeList)
     plt.xticks(ticks=values_of_x, labels=xLabels, rotation="horizontal")
     plt.legend()
     plt.title("Frequencies comparision")
@@ -297,7 +298,16 @@ Parameters: list of strs ; 2D list of values
 Returns: list of strs
 '''
 def makeEdgeList(labels, biggestDiffs):
-    return
+    edge_list=[]
+    words_list=[]
+    for i in range(len(biggestDiffs)):
+        words_list.append(biggestDiffs[i][0])
+    for i in range(len(labels)):
+        if labels[i] in words_list:
+            edge_list.append("black")
+        else:
+            edge_list.append("white")
+    return edge_list
 
 
 '''
@@ -332,7 +342,7 @@ if __name__ == "__main__":
 
     print("\n" + "#"*15 + " WEEK 3 TESTS " +  "#" * 16 + "\n")
     # test.week3Tests()
-    test.testCreateChart()
+    test.testMakeEdgeList()
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     # runFullProgram()
 
